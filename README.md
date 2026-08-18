@@ -79,11 +79,27 @@ Windows 示例：
 dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.1.0.tgz"
 ```
 
-### 方式二：从源码打包安装
+### 方式二：从 GitHub 项目拉取并安装
+
+适合希望直接使用 GitHub 最新源码和安装包的场景：
 
 ```bash
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz"
+```
+
+Windows PowerShell：
+
+```powershell
+git clone https://github.com/Guyao146/dsh-activity-tracker.git
+Set-Location dsh-activity-tracker
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz"
+```
+
+如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
+
+```bash
 npm pack
 dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz"
 ```
