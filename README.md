@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.0.0-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.1.0-2ea043)](./package.json)
 [![License](https://img.shields.io/badge/license-MIT-blue)](./package.json)
 
 `dsh-activity-tracker` 是一个面向 **DeepSeek Harness（DSH）Web** 的本地活动统计插件。它读取 DSH 已有的会话记录，将用户输入、代码编辑、命令执行、检索阅读、其他工具调用以及 Token 消耗按日期、小时和项目聚合，并在 DSH 侧栏中提供可视化统计面板。
@@ -66,17 +66,17 @@ C:\Users\<用户名>\.dsh\sessions
 
 ### 方式一：使用仓库中的安装包
 
-1. 下载仓库根目录中的 `dsh-activity-tracker-1.0.0.tgz`。
+1. 下载仓库根目录中的 `dsh-activity-tracker-1.1.0.tgz`。
 2. 使用本地文件安装插件：
 
 ```bash
-dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.0.0.tgz"
+dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.1.0.tgz"
 ```
 
 Windows 示例：
 
 ```powershell
-dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.0.0.tgz"
+dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.1.0.tgz"
 ```
 
 ### 方式二：从源码打包安装
@@ -85,7 +85,7 @@ dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.0.0.tgz"
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.0.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -226,7 +226,7 @@ GET /dsh-activity/api/costs
 ```text
 .
 ├─ cordis.patch.yml                 # DSH 插件激活补丁
-├─ dsh-activity-tracker-1.0.0.tgz  # 可直接安装的插件包
+├─ dsh-activity-tracker-1.1.0.tgz  # 可直接安装的插件包
 ├─ package.json                     # 包信息及 DSH 扩展声明
 ├─ README.md                        # 项目文档
 └─ lib/
