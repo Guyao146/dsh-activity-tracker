@@ -2,6 +2,8 @@
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
 [![Version](https://img.shields.io/badge/version-1.4.3-2ea043)](./package.json)
+[![Release](https://img.shields.io/github/v/release/Guyao146/dsh-activity-tracker?display_name=tag)](https://github.com/Guyao146/dsh-activity-tracker/releases/latest)
+[![Package and Release](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml/badge.svg)](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue)](./package.json)
 
 `dsh-activity-tracker` 是一个面向 **DeepSeek Harness（DSH）Web** 的本地活动统计插件。它读取 DSH 已有的会话记录，将用户输入、代码编辑、命令执行、检索阅读、其他工具调用以及 Token 消耗按日期、小时和项目聚合，并在 DSH 侧栏中提供可视化统计面板。
@@ -74,19 +76,19 @@ C:\Users\<用户名>\.dsh\sessions
 
 ## 📦 安装
 
-### 方式一：使用仓库中的安装包
+### 方式一：安装 GitHub Release 最新版本（推荐）
 
-1. 下载仓库根目录中的 `dsh-activity-tracker-1.4.3.tgz`。
+1. 从 [Releases](https://github.com/Guyao146/dsh-activity-tracker/releases/latest) 下载 `dsh-activity-tracker.tgz`。
 2. 使用本地文件安装插件：
 
 ```bash
-dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.4.3.tgz"
+dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker.tgz"
 ```
 
 Windows 示例：
 
 ```powershell
-dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.4.3.tgz"
+dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker.tgz"
 ```
 
 ### 方式二：从 GitHub 项目拉取并安装
@@ -94,19 +96,19 @@ dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.4.3.tgz"
 如果只想直接下载发布包并安装，可以使用一行命令：
 
 ```bash
-curl -fL https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.3.tgz -o dsh-activity-tracker-1.4.3.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
+curl -fL https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz -o dsh-activity-tracker.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker.tgz"
 ```
 
 也可以使用 `wget` 下载 `main` 分支中的安装包：
 
 ```bash
-wget -O dsh-activity-tracker-1.4.3.tgz https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.3.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
+wget -O dsh-activity-tracker.tgz https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker.tgz"
 ```
 
 Windows PowerShell：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.3.tgz" -OutFile "dsh-activity-tracker-1.4.3.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz" }
+Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz" -OutFile "dsh-activity-tracker.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker.tgz" }
 ```
 
 适合希望直接使用 GitHub 最新源码和安装包的场景：
@@ -114,6 +116,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/mai
 ```bash
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
+npm pack
 dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
@@ -122,6 +125,7 @@ Windows PowerShell：
 ```powershell
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
+npm pack
 dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
@@ -298,7 +302,7 @@ DSH_HOME/dsh-activity-tracker-ui.json
 ```text
 .
 ├─ cordis.patch.yml                 # DSH 插件激活补丁
-├─ dsh-activity-tracker-1.4.3.tgz  # 可直接安装的插件包
+├─ .github/workflows/release.yml   # 自动打包并发布 GitHub Release
 ├─ package.json                     # 包信息及 DSH 扩展声明
 ├─ README.md                        # 项目文档
 └─ lib/
@@ -320,6 +324,22 @@ npm pack --dry-run
 
 ```bash
 npm pack
+```
+
+### 自动发布 GitHub Release
+
+向 `main` 推送后，`.github/workflows/release.yml` 会读取 `package.json` 中的版本号：
+
+1. 校验 JavaScript 语法并执行 `npm pack --dry-run`；
+2. 生成并核对安装包内容；
+3. 创建 `v<version>` Git Tag 和 GitHub Release；
+4. 上传版本化安装包、固定名 `dsh-activity-tracker.tgz` 和 `SHA256SUMS.txt`；
+5. 如果对应版本 Release 已存在则安全跳过，不会覆盖已发布附件。
+
+因此发布新版本只需修改 `package.json` 的 `version` 并推送到 `main`。也可以在 GitHub Actions 页面手动运行 **Package and Release**。构建产物不提交到 Git 仓库，最新版本始终可通过固定地址下载：
+
+```text
+https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz
 ```
 
 根据 `package.json` 中的 `files` 字段，安装包只包含：
