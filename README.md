@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.4.6-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.4.7-2ea043)](./package.json)
 [![Release](https://img.shields.io/github/v/release/Guyao146/dsh-activity-tracker?display_name=tag)](https://github.com/Guyao146/dsh-activity-tracker/releases/latest)
 [![Package and Release](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml/badge.svg)](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](./LICENSE)
@@ -117,7 +117,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/release
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.6.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.7.tgz"
 ```
 
 Windows PowerShell：
@@ -126,14 +126,14 @@ Windows PowerShell：
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.6.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.7.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.6.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.7.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -271,6 +271,8 @@ GET /dsh-activity/api/day?date=YYYY-MM-DD&project=<项目标识>&session=<会话
 远端 Life Dashboard `.env` 中的 `LIFE_HUB_DSH_PUSH_SECRET` 必须与 `token` 完全相同。推送仅允许 HTTPS，使用时间戳和 HMAC-SHA256 签名；远端拒绝超过 120 秒或重复的请求。关闭本地 DSH 后，生活看板会在默认 45 秒后显示数据源离线。
 
 接口只传项目名称、不透明工作区/会话 ID、时间和聚合计数，不传完整路径、会话标题、用户输入、文件名或命令内容。环境变量 `DSH_ACTIVITY_DASHBOARD_PUSH_URL` 和 `DSH_ACTIVITY_DASHBOARD_TOKEN` 可覆盖 JSON 配置。修改后重启 DSH。
+
+推送器会自动读取 `HTTPS_PROXY` / `ALL_PROXY`，并遵守 `NO_PROXY`；HTTP 代理通过 CONNECT 建立 TLS 隧道。配置文件同时兼容 UTF-8 BOM，使用 Windows PowerShell 编辑后也能正常加载。
 
 ### Sub2API 配置与同步
 
