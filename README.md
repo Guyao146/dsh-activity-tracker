@@ -16,6 +16,8 @@
 - **24 小时 Token 分布**：查看一天中各小时的 Token 使用情况。
 - **当日事件时间线**：展示事件发生时间、事件类型、工具名称、内容摘要、项目和模型。
 - **每日汇总表**：汇总近 31 个活跃日的事件数与 Token 消耗。
+- **费用统计**：按项目、模型、项目 × 模型和日期查看 Sub2API 价格计算结果。
+- **Sub2API 价格同步**：支持设置 API 地址与 Key、手动同步、每天首次启动自动同步和每日价格历史快照。
 - **多项目过滤**：按 DSH 会话的工作目录区分项目，可查看全部或单个项目。
 - **时间范围过滤**：支持今日、近 7 天、近 30 天和全部记录。
 - **本地时区统计**：所有日期和小时均按照 DSH 宿主机的本地时区计算。
@@ -203,6 +205,22 @@ GET /dsh-activity/api/day?date=YYYY-MM-DD&project=<项目标识>
 
 为控制响应体积，单日事件和 Token 明细分别最多返回 8,000 条。
 
+### Sub2API 配置与同步
+
+```http
+GET /dsh-activity/api/pricing/config
+PUT /dsh-activity/api/pricing/config
+POST /dsh-activity/api/pricing/sync
+GET /dsh-activity/api/costs
+```
+
+这些接口由插件前端使用：
+
+- `GET /pricing/config`：读取已配置的地址、是否已配置 Key、默认分组和最近同步状态，不返回 Key；
+- `PUT /pricing/config`：保存 `baseUrl`、`apiKey` 和可选的 `groupId`；
+- `POST /pricing/sync`：立即从 Sub2API 获取当天模型价格并保存快照；
+- `GET /costs`：返回总费用以及按项目、模型、项目 × 模型和日期聚合的费用。
+
 ## 📁 项目结构
 
 ```text
@@ -269,6 +287,67 @@ npm pack
 ### 数据为什么和服务商账单不完全一致
 
 插件累计的是 DSH 会话事件中的 Token usage，不计算价格、折扣、免费额度或服务端账单修正，因此仅用于活动分析和用量参考。
+
+## 💰 Sub2API 费用统计
+
+插件支持从自建的 [Sub2API](https://github.com/Wei-Shaw/sub2api) 获取模型价格，并根据 DSH 会话实际使用的模型计算费用。
+
+### 配置
+
+打开 **📊 活动统计 → Sub2API 设置**，填写：
+
+- **API 地址**：Sub2API 部署地址，例如 `https://sub2api.example.com`；
+- **API Key / JWT**：用于访问 Sub2API 用户接口的凭据；
+- **默认分组 ID**（可选）：同一模型存在多个可用分组时，指定要采用的分组。
+
+配置后可以选择：
+
+- **保存配置**：保存地址和 Key；
+- **保存并立即同步**：保存后立即请求最新价格；
+- 每天第一次加载插件时自动同步当天价格；
+- 费用统计页打开时使用当天已有快照，避免重复请求。
+
+Key 只保存在 DSH 宿主机的 `DSH_HOME/dsh-activity-tracker-pricing.json`，不会返回给浏览器，也不会写入统计响应。
+
+### 价格来源与计算方式
+
+宿主端请求 Sub2API：
+
+```http
+GET /api/v1/channels/available
+Authorization: Bearer <API Key 或 JWT>
+```
+
+插件读取每个模型的：
+
+- `input_price`：输入 Token 单价；
+- `output_price`：输出 Token 单价；
+- `cache_read_price`：缓存读取 Token 单价；
+- 所属分组的 `rate_multiplier`：Sub2API 分组倍率。
+
+费用计算公式为：
+
+```text
+输入 Token × 输入单价
++ 输出 Token × 输出单价
++ 缓存读取 Token × 缓存读取单价
+```
+
+最后将结果乘以分组倍率。Sub2API 返回的价格按每 Token 处理；如果你的部署返回的价格单位不同，请先确认 Sub2API 的计价配置。
+
+### 历史快照
+
+每天同步成功后，插件会按本地日期保存一份价格快照。历史 Token 会优先使用对应日期快照；如果该日期没有快照，则回退到最近的较早快照。这样修改今天的模型价格不会重算过去的费用。
+
+费用统计页提供：
+
+- 按项目统计；
+- 按模型统计；
+- 按项目 × 模型统计；
+- 每日费用历史；
+- 已匹配价格 Token 和缺少价格 Token 数量。
+
+如果 DSH 使用的模型未在 Sub2API 返回结果中匹配到，Token 仍会统计，但费用显示为未计价，不会错误显示为 0 元。
 
 ## ⚠️ 已知限制
 
