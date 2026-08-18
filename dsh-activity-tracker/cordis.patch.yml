@@ -1,0 +1,4 @@
+# dsh-activity-tracker 激活补丁（dsh plugin add 读取 dsh.bundle.patch 自动接入）
+- insert:
+    - id: activity-tracker
+      name: 'dsh-activity-tracker'
