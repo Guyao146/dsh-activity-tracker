@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.2.0-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.3.0-2ea043)](./package.json)
 [![License](https://img.shields.io/badge/license-MIT-blue)](./package.json)
 
 `dsh-activity-tracker` 是一个面向 **DeepSeek Harness（DSH）Web** 的本地活动统计插件。它读取 DSH 已有的会话记录，将用户输入、代码编辑、命令执行、检索阅读、其他工具调用以及 Token 消耗按日期、小时和项目聚合，并在 DSH 侧栏中提供可视化统计面板。
@@ -18,6 +18,8 @@
 - **每日汇总表**：汇总近 31 个活跃日的事件数与 Token 消耗。
 - **费用统计**：按项目、模型、项目 × 模型和日期查看 Sub2API 价格计算结果。
 - **Sub2API 账号登录与价格同步**：支持账号密码登录、TOTP 二次验证、Token 自动续期、手动同步、每天首次启动自动同步和每日价格历史快照。
+- **Sub2API 账户摘要**：登录后显示中转站名称、当前账号、余额以及已订阅分组的月度使用量/额度。
+- **可定制仪表盘**：在“总设置”中开关模块、选择小/中/大三档样式、拖拽模块排序，并拖动面板边缘或使用滑块调整宽度。
 - **多项目过滤**：按 DSH 会话的工作目录区分项目，可查看全部或单个项目。
 - **时间范围过滤**：支持今日、近 7 天、近 30 天和全部记录。
 - **本地时区统计**：所有日期和小时均按照 DSH 宿主机的本地时区计算。
@@ -66,17 +68,17 @@ C:\Users\<用户名>\.dsh\sessions
 
 ### 方式一：使用仓库中的安装包
 
-1. 下载仓库根目录中的 `dsh-activity-tracker-1.2.0.tgz`。
+1. 下载仓库根目录中的 `dsh-activity-tracker-1.3.0.tgz`。
 2. 使用本地文件安装插件：
 
 ```bash
-dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.2.0.tgz"
+dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.3.0.tgz"
 ```
 
 Windows 示例：
 
 ```powershell
-dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.2.0.tgz"
+dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.3.0.tgz"
 ```
 
 ### 方式二：从 GitHub 项目拉取并安装
@@ -84,19 +86,19 @@ dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.2.0.tgz"
 如果只想直接下载发布包并安装，可以使用一行命令：
 
 ```bash
-curl -fL https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.2.0.tgz -o dsh-activity-tracker-1.2.0.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz"
+curl -fL https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.3.0.tgz -o dsh-activity-tracker-1.3.0.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.3.0.tgz"
 ```
 
 也可以使用 `wget` 下载 `main` 分支中的安装包：
 
 ```bash
-wget -O dsh-activity-tracker-1.2.0.tgz https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.2.0.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz"
+wget -O dsh-activity-tracker-1.3.0.tgz https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.3.0.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.3.0.tgz"
 ```
 
 Windows PowerShell：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.2.0.tgz" -OutFile "dsh-activity-tracker-1.2.0.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz" }
+Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.3.0.tgz" -OutFile "dsh-activity-tracker-1.3.0.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker-1.3.0.tgz" }
 ```
 
 适合希望直接使用 GitHub 最新源码和安装包的场景：
@@ -104,7 +106,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/mai
 ```bash
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.3.0.tgz"
 ```
 
 Windows PowerShell：
@@ -112,14 +114,14 @@ Windows PowerShell：
 ```powershell
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.3.0.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.3.0.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -165,11 +167,11 @@ dsh plugin --profile web add "file:./dsh-activity-tracker-1.2.0.tgz"
 ## 🔐 隐私与安全
 
 - 数据只从本机 DSH 会话目录读取，并在本机内存中聚合。
-- 插件没有遥测、埋点或第三方网络请求。
+- 插件没有遥测或埋点。只有在用户配置 Sub2API 后，宿主端才会请求该地址完成登录、Token 续期、账户摘要和价格同步。
 - 浏览器端只请求同源接口 `/dsh-activity/api`。
 - API 要求请求头 `X-DSH-Activity: 1`，用于降低跨站请求伪造风险。
 - API 响应包含活动摘要，例如用户文本片段、文件名、命令和查询。请勿将接口暴露给不受信任的访问者。
-- 宿主端仅注册 `GET` 查询能力，不会修改或删除 DSH 会话文件。
+- 宿主端不会修改或删除 DSH 会话文件；配置、登录、同步和退出使用本地插件 API 的 `PUT`/`POST` 路由。
 
 ## 🏗️ 工作原理
 
@@ -252,15 +254,28 @@ GET /dsh-activity/api/costs
 
 - `GET /pricing/config`：读取已配置的地址、是否已配置用户 JWT、默认分组和最近同步状态，不返回 Token；
 - `PUT /pricing/config`：保存 `baseUrl`、用户 JWT 和可选的 `groupId`；
+- `GET /pricing/account`：使用当前登录会话读取中转站名称、账号余额和订阅额度摘要，不返回任何认证 Token；
 - `POST /pricing/sync`：立即从 Sub2API 获取当天模型价格并保存快照；
 - `GET /costs`：返回总费用以及按项目、模型、项目 × 模型和日期聚合的费用。
+
+### 总设置与仪表盘布局
+
+打开 **📊 活动统计 → 总设置** 可以：
+
+- 登录/退出 Sub2API，并查看当前中转站名称、余额和订阅摘要；
+- 开关概览卡片、热力图、事件图例、小时图、Token 图、时间线和每日汇总等模块；
+- 为每个模块选择 **小 / 中 / 大** 三档样式；
+- 直接拖动模块列表排序，也可以使用上下按钮微调顺序；
+- 使用宽度滑块或浮层左侧边缘拖动手柄调整面板宽度。
+
+布局只保存在当前浏览器的 `localStorage` 键 `dsat-layout`，不会上传到网络。升级插件不会覆盖已有布局；缺失的新模块会自动补到末尾。
 
 ## 📁 项目结构
 
 ```text
 .
 ├─ cordis.patch.yml                 # DSH 插件激活补丁
-├─ dsh-activity-tracker-1.2.0.tgz  # 可直接安装的插件包
+├─ dsh-activity-tracker-1.3.0.tgz  # 可直接安装的插件包
 ├─ package.json                     # 包信息及 DSH 扩展声明
 ├─ README.md                        # 项目文档
 └─ lib/
@@ -328,7 +343,7 @@ npm pack
 
 ### 配置
 
-打开 **📊 活动统计 → Sub2API 设置**，填写：
+打开 **📊 活动统计 → 总设置** 可以：
 
 - **API 地址**：Sub2API 部署地址，例如 `https://sub2api.example.com`；
 - **登录邮箱和密码**：插件宿主直接调用 Sub2API 登录接口，密码仅用于本次登录，不会写入本地文件；
