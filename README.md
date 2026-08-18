@@ -81,6 +81,24 @@ dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.1.0.tgz"
 
 ### 方式二：从 GitHub 项目拉取并安装
 
+如果只想直接下载发布包并安装，可以使用一行命令：
+
+```bash
+curl -fL https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.1.0.tgz -o dsh-activity-tracker-1.1.0.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz"
+```
+
+也可以使用 `wget` 下载 `main` 分支中的安装包：
+
+```bash
+wget -O dsh-activity-tracker-1.1.0.tgz https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.1.0.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz"
+```
+
+Windows PowerShell：
+
+```powershell
+Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.1.0.tgz" -OutFile "dsh-activity-tracker-1.1.0.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker-1.1.0.tgz" }
+```
+
 适合希望直接使用 GitHub 最新源码和安装包的场景：
 
 ```bash
