@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.4.2-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.4.3-2ea043)](./package.json)
 [![License](https://img.shields.io/badge/license-MIT-blue)](./package.json)
 
 `dsh-activity-tracker` 是一个面向 **DeepSeek Harness（DSH）Web** 的本地活动统计插件。它读取 DSH 已有的会话记录，将用户输入、代码编辑、命令执行、检索阅读、其他工具调用以及 Token 消耗按日期、小时和项目聚合，并在 DSH 侧栏中提供可视化统计面板。
@@ -27,6 +27,8 @@
 - **宿主持久化**：模块开关、尺寸、顺序、宽度和筛选同时保存到 DSH 宿主机，重启后自动恢复。
 - **容器响应式布局**：根据活动面板自身宽度而不是浏览器窗口宽度自动重排；窄面板会将模块切为整行，概览卡片自动切换为 3 / 2 / 1 列。
 - **多项目过滤**：按 DSH 会话的工作目录区分项目，可查看全部或单个项目。
+- **会话过滤**：可在全部项目或选定项目下继续选择单个会话，所有概览、图表、热力图和时间线同步过滤。
+- **统一筛选栏**：项目、会话与日期选择器使用统一高度和响应式列宽；关闭按钮固定在标题栏右上角。
 - **时间范围过滤**：支持今日、近 7 天、近 30 天和全部记录。
 - **本地时区统计**：所有日期和小时均按照 DSH 宿主机的本地时区计算。
 - **增量解析缓存**：根据会话文件的修改时间和大小复用解析结果，减少重复扫描开销。
@@ -74,17 +76,17 @@ C:\Users\<用户名>\.dsh\sessions
 
 ### 方式一：使用仓库中的安装包
 
-1. 下载仓库根目录中的 `dsh-activity-tracker-1.4.2.tgz`。
+1. 下载仓库根目录中的 `dsh-activity-tracker-1.4.3.tgz`。
 2. 使用本地文件安装插件：
 
 ```bash
-dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.4.2.tgz"
+dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker-1.4.3.tgz"
 ```
 
 Windows 示例：
 
 ```powershell
-dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.4.2.tgz"
+dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.4.3.tgz"
 ```
 
 ### 方式二：从 GitHub 项目拉取并安装
@@ -92,19 +94,19 @@ dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker-1.4.2.tgz"
 如果只想直接下载发布包并安装，可以使用一行命令：
 
 ```bash
-curl -fL https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.2.tgz -o dsh-activity-tracker-1.4.2.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz"
+curl -fL https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.3.tgz -o dsh-activity-tracker-1.4.3.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
 也可以使用 `wget` 下载 `main` 分支中的安装包：
 
 ```bash
-wget -O dsh-activity-tracker-1.4.2.tgz https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.2.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz"
+wget -O dsh-activity-tracker-1.4.3.tgz https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.3.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
 Windows PowerShell：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.2.tgz" -OutFile "dsh-activity-tracker-1.4.2.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz" }
+Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/main/dsh-activity-tracker-1.4.3.tgz" -OutFile "dsh-activity-tracker-1.4.3.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz" }
 ```
 
 适合希望直接使用 GitHub 最新源码和安装包的场景：
@@ -112,7 +114,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/raw/mai
 ```bash
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
 Windows PowerShell：
@@ -120,14 +122,14 @@ Windows PowerShell：
 ```powershell
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -139,7 +141,7 @@ dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.2.tgz"
 1. 启动或重启 DSH Web。
 2. 在 DSH 左侧栏找到 **📊 活动统计**。
 3. 点击入口打开统计浮层。
-4. 使用顶部筛选器选择项目和时间范围。
+4. 使用顶部筛选器选择项目、会话和时间范围。
 5. 点击热力图日期或每日汇总表中的日期，查看当天的小时分布和事件时间线。
 6. 新会话产生数据后，点击右上角的 **刷新** 重新扫描。
 
@@ -237,13 +239,14 @@ GET /dsh-activity/api/overview
 ### 获取单日明细
 
 ```http
-GET /dsh-activity/api/day?date=YYYY-MM-DD&project=<项目标识>
+GET /dsh-activity/api/day?date=YYYY-MM-DD&project=<项目标识>&session=<会话 ID>
 ```
 
 参数：
 
 - `date`：必填，格式为 `YYYY-MM-DD`。
 - `project`：可选，为项目完整工作目录的小写形式；不传时返回全部项目。
+- `session`：可选，格式为 `session-...`；传入后只返回该会话的事件与 Token 明细。
 
 为控制响应体积，单日事件和 Token 明细分别最多返回 8,000 条。
 
@@ -271,7 +274,7 @@ GET /dsh-activity/api/ui/config
 PUT /dsh-activity/api/ui/config
 ```
 
-用于读取和保存模块开关、尺寸、顺序、面板宽度、项目筛选和日期范围。配置保存在：
+用于读取和保存模块开关、尺寸、顺序、面板宽度、项目/会话筛选和日期范围。配置保存在：
 
 ```text
 DSH_HOME/dsh-activity-tracker-ui.json
@@ -295,7 +298,7 @@ DSH_HOME/dsh-activity-tracker-ui.json
 ```text
 .
 ├─ cordis.patch.yml                 # DSH 插件激活补丁
-├─ dsh-activity-tracker-1.4.2.tgz  # 可直接安装的插件包
+├─ dsh-activity-tracker-1.4.3.tgz  # 可直接安装的插件包
 ├─ package.json                     # 包信息及 DSH 扩展声明
 ├─ README.md                        # 项目文档
 └─ lib/
