@@ -250,8 +250,8 @@ GET /dsh-activity/api/costs
 
 这些接口由插件前端使用：
 
-- `GET /pricing/config`：读取已配置的地址、是否已配置 Key、默认分组和最近同步状态，不返回 Key；
-- `PUT /pricing/config`：保存 `baseUrl`、`apiKey` 和可选的 `groupId`；
+- `GET /pricing/config`：读取已配置的地址、是否已配置用户 JWT、默认分组和最近同步状态，不返回 Token；
+- `PUT /pricing/config`：保存 `baseUrl`、用户 JWT 和可选的 `groupId`；
 - `POST /pricing/sync`：立即从 Sub2API 获取当天模型价格并保存快照；
 - `GET /costs`：返回总费用以及按项目、模型、项目 × 模型和日期聚合的费用。
 
@@ -336,12 +336,12 @@ npm pack
 
 配置后可以选择：
 
-- **保存配置**：保存地址和 Key；
+- **保存配置**：保存地址和用户 JWT；
 - **保存并立即同步**：保存后立即请求最新价格；
 - 每天第一次加载插件时自动同步当天价格；
 - 费用统计页打开时使用当天已有快照，避免重复请求。
 
-Key 只保存在 DSH 宿主机的 `DSH_HOME/dsh-activity-tracker-pricing.json`，不会返回给浏览器，也不会写入统计响应。
+用户 JWT 只保存在 DSH 宿主机的 `DSH_HOME/dsh-activity-tracker-pricing.json`，不会返回给浏览器，也不会写入统计响应。
 
 ### 价格来源与计算方式
 
