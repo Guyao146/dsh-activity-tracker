@@ -7,6 +7,7 @@ on:
     paths:
       - package.json
       - README.md
+      - LICENSE
       - cordis.patch.yml
       - lib/**
       - .github/workflows/release.yml
@@ -69,6 +70,7 @@ jobs:
           set -euo pipefail
           node --check lib/index.js
           node --check lib/client.js
+          node -e "const fs=require('fs'),p=require('./package.json'),s=fs.readFileSync('LICENSE','utf8');if(p.license!=='AGPL-3.0-only')throw Error('package.json license must be AGPL-3.0-only');if(!s.includes('GNU AFFERO GENERAL PUBLIC LICENSE')||!s.includes('13. Remote Network Interaction'))throw Error('LICENSE is not the complete GNU AGPL v3 text')"
           npm pack --dry-run
 
       - name: Build and verify package
@@ -87,6 +89,7 @@ jobs:
           tar -tzf "$TGZ" | sort > package-contents.txt
           printf '%s\n' \
             package/README.md \
+            package/LICENSE \
             package/cordis.patch.yml \
             package/lib/client.js \
             package/lib/index.js \

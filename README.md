@@ -1,10 +1,10 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.4.3-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.4.4-2ea043)](./package.json)
 [![Release](https://img.shields.io/github/v/release/Guyao146/dsh-activity-tracker?display_name=tag)](https://github.com/Guyao146/dsh-activity-tracker/releases/latest)
 [![Package and Release](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml/badge.svg)](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml)
-[![License](https://img.shields.io/badge/license-MIT-blue)](./package.json)
+[![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](./LICENSE)
 
 `dsh-activity-tracker` 是一个面向 **DeepSeek Harness（DSH）Web** 的本地活动统计插件。它读取 DSH 已有的会话记录，将用户输入、代码编辑、命令执行、检索阅读、其他工具调用以及 Token 消耗按日期、小时和项目聚合，并在 DSH 侧栏中提供可视化统计面板。
 
@@ -117,7 +117,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/release
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.4.tgz"
 ```
 
 Windows PowerShell：
@@ -126,14 +126,14 @@ Windows PowerShell：
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.4.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.3.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.4.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -303,6 +303,7 @@ DSH_HOME/dsh-activity-tracker-ui.json
 .
 ├─ cordis.patch.yml                 # DSH 插件激活补丁
 ├─ .github/workflows/release.yml   # 自动打包并发布 GitHub Release
+├─ LICENSE                         # GNU AGPL v3.0 only 许可证全文
 ├─ package.json                     # 包信息及 DSH 扩展声明
 ├─ README.md                        # 项目文档
 └─ lib/
@@ -347,6 +348,7 @@ https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-ac
 - `lib/`
 - `cordis.patch.yml`
 - `README.md`
+- `LICENSE`
 - npm 自动包含的 `package.json`
 
 修改宿主端或浏览器端代码后，请重新打包、重新安装插件并重启 DSH Web。
@@ -463,4 +465,6 @@ Authorization: Bearer <Sub2API 用户 access_token/JWT>
 
 ## 📄 License
 
-本项目使用 MIT License。
+本项目使用 **GNU Affero General Public License v3.0 only**（SPDX：`AGPL-3.0-only`）。完整条款见 [LICENSE](./LICENSE)。
+
+简要说明：你可以使用、研究、修改和再分发本项目，但分发修改版时必须继续以 AGPL v3 提供对应源代码；如果修改后的程序通过网络向用户提供功能，也必须向这些网络用户提供该修改版本的完整对应源代码。本段仅为便于理解的摘要，不替代正式许可证文本。
