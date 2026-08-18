@@ -1,6 +1,6 @@
 # 📊 dsh-activity-tracker
 
-[![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/Guyao146/dsh-activity-tracker)
+[![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
 [![Version](https://img.shields.io/badge/version-1.0.0-2ea043)](./package.json)
 [![License](https://img.shields.io/badge/license-MIT-blue)](./package.json)
 
@@ -273,6 +273,13 @@ npm pack
 - 项目筛选标识基于完整工作目录；项目移动后会被视为不同项目。
 - 工具分类采用名称匹配规则，新工具可能暂时显示为“其他工具”。
 - 当前版本仅提供本地统计，不支持跨设备同步、费用换算或数据导出。
+
+## 🤝 社区与支持
+
+- DSH 官方仓库：[deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)。
+- 欢迎通过 [DeepSeek Harness GitHub Discussions](https://github.com/deepseek-ai/deepseek-harness/discussions) 提交反馈或 Bug 报告。
+- 本仓库使用 [`dsh-plugin`](https://github.com/topics/dsh-plugin) Topic，便于在 GitHub 上发现 DSH 插件。
+- 欢迎加入 [DeepSeek Harness Discord 社区](https://discord.gg/Ycq5dCaS4)。
 
 ## 📄 License
 
