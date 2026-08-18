@@ -25,6 +25,10 @@
 
 ## 🖥️ 面板内容
 
+预览：
+<img width="1110" height="1344" alt="image" src="https://github.com/user-attachments/assets/c1a2c7ee-2aaa-4d4f-8cdc-08f0dce12415" />
+
+
 活动事件分为以下五类：
 
 | 类型 | 颜色 | 典型事件 |
