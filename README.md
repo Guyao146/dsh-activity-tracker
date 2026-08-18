@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.4.4-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.4.5-2ea043)](./package.json)
 [![Release](https://img.shields.io/github/v/release/Guyao146/dsh-activity-tracker?display_name=tag)](https://github.com/Guyao146/dsh-activity-tracker/releases/latest)
 [![Package and Release](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml/badge.svg)](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](./LICENSE)
@@ -117,7 +117,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/release
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.4.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.5.tgz"
 ```
 
 Windows PowerShell：
@@ -126,14 +126,14 @@ Windows PowerShell：
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.4.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.5.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.4.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.4.5.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -253,6 +253,33 @@ GET /dsh-activity/api/day?date=YYYY-MM-DD&project=<项目标识>&session=<会话
 - `session`：可选，格式为 `session-...`；传入后只返回该会话的事件与 Token 明细。
 
 为控制响应体积，单日事件和 Token 明细分别最多返回 8,000 条。
+
+### 生活看板实时工作区接口
+
+插件可以为 [Life Dashboard](https://github.com/Guyao146/Life-Dashboard) 提供只读工作区状态：
+
+```http
+GET /dsh-activity/api/workspaces
+X-DSH-Dashboard-Token: <共享令牌>
+```
+
+状态按最后活动时间划分为：2 分钟内“工作中”、15 分钟内“活跃”、60 分钟内“最近活动”，其余为“空闲”。接口只返回项目名称、不透明工作区/会话 ID、时间和聚合计数，不返回完整工作目录、会话标题、用户输入或命令内容。
+
+在运行 DSH 的主机创建：
+
+```text
+~/.dsh/dsh-activity-tracker-dashboard.json
+```
+
+内容如下，令牌至少 24 个字符，建议使用 32 字节随机值：
+
+```json
+{
+  "token": "replace-with-a-random-32-byte-or-longer-secret"
+}
+```
+
+也可以通过环境变量 `DSH_ACTIVITY_DASHBOARD_TOKEN` 配置；环境变量优先于 JSON 文件。修改后需要重启 DSH。Life Dashboard 服务器需要将可访问的 DSH 地址填入 `LIFE_HUB_DSH_URL`，并将同一令牌填入 `LIFE_HUB_DSH_TOKEN`。
 
 ### Sub2API 配置与同步
 
