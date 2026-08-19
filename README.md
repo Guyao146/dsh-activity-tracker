@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.5.0-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.6.0-2ea043)](./package.json)
 [![Release](https://img.shields.io/github/v/release/Guyao146/dsh-activity-tracker?display_name=tag)](https://github.com/Guyao146/dsh-activity-tracker/releases/latest)
 [![Package and Release](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml/badge.svg)](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](./LICENSE)
@@ -37,6 +37,7 @@
 - **侧栏入口自恢复**：通过 `MutationObserver` 在 DSH 页面更新后自动恢复“活动统计”入口。
 - **明暗主题适配**：统计浮层可跟随浏览器的浅色或深色主题。
 - **生活看板双向会话**：可选将授权工作区的会话快照通过 HMAC 签名 HTTPS 推送到生活看板；管理员可向当前运行中的 DSH 会话发送后续消息。
+- **六位码一键配对**：在生活看板生成一次性验证码后，直接在 DSH「活动统计 → 总设置」完成连接，无需手动创建或编辑 JSON 配置文件。
 
 ## 🖥️ 面板内容
 
@@ -118,7 +119,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/release
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.5.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.0.tgz"
 ```
 
 Windows PowerShell：
@@ -127,14 +128,14 @@ Windows PowerShell：
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.5.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.0.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.5.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.0.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
@@ -259,28 +260,26 @@ GET /dsh-activity/api/day?date=YYYY-MM-DD&project=<项目标识>&session=<会话
 
 插件可将脱敏工作区快照从本地 DSH 主动推送到远端 Life Dashboard，无需公网 IP、端口映射或让远端访问本机 2712 端口。
 
-在 `~/.dsh/dsh-activity-tracker-dashboard.json` 配置：
+推荐使用 **六位配对码**，不需要手动编写任何本地配置文件：
 
-```json
-{
-  "token": "replace-with-a-random-32-byte-or-longer-secret",
-  "pushUrl": "https://life.mcylyr.cn/config.php?action=workspace-push",
-  "intervalSeconds": 10
-}
-```
+1. 在 Life Dashboard 使用 **Authentik 管理员**登录，进入 **设置 → 连接与账户 → 连接本机 DSH**；
+2. 点击「生成 DSH 配对码」，得到一个 6 位数字；
+3. 打开本机 DSH 的 **📊 活动统计 → 总设置 → 生活看板连接**；
+4. 保持看板地址为 `https://life.mcylyr.cn/config.php`（或填写你自己的 `config.php` HTTPS 地址），输入验证码；
+5. 按需勾选「允许查看会话详情」，然后点击「输入验证码并连接」。
 
-远端 Life Dashboard `.env` 中的 `LIFE_HUB_DSH_PUSH_SECRET` 必须与 `token` 完全相同。推送仅允许 HTTPS，使用时间戳和 HMAC-SHA256 签名；远端拒绝超过 120 秒或重复的请求。关闭本地 DSH 后，生活看板会在默认 45 秒后显示数据源离线。
+验证码仅在 **5 分钟**内有效、只能成功使用一次，连续失败最多 5 次。配对成功后，插件会自动以仅当前用户可读的权限保存连接所需的 HTTPS 地址、HMAC 推送令牌和详情授权选项；令牌不会显示在 DSH 页面，也无需复制或手写。
 
-接口只传项目名称、不透明工作区/会话 ID、时间和聚合计数，不传完整路径、会话标题、用户输入、文件名或命令内容。环境变量 `DSH_ACTIVITY_DASHBOARD_PUSH_URL` 和 `DSH_ACTIVITY_DASHBOARD_TOKEN` 可覆盖 JSON 配置。修改后重启 DSH。
+远端 Life Dashboard 仍需在服务器 `.env` 中配置至少 32 个字符的 `LIFE_HUB_DSH_PUSH_SECRET`。推送仅允许 HTTPS，使用时间戳和 HMAC-SHA256 签名；远端拒绝超过 120 秒或重复的请求。关闭本地 DSH 后，生活看板会在默认 45 秒后显示数据源离线。
 
-推送器会自动读取 `HTTPS_PROXY` / `ALL_PROXY`，并遵守 `NO_PROXY`；HTTP 代理通过 CONNECT 建立 TLS 隧道。配置文件同时兼容 UTF-8 BOM，使用 Windows PowerShell 编辑后也能正常加载。
+接口只传项目名称、不透明工作区/会话 ID、时间和聚合计数；未勾选详情授权时不会上传会话标题、用户输入、文件名或命令内容。推送器会自动读取 `HTTPS_PROXY` / `ALL_PROXY`，并遵守 `NO_PROXY`；HTTP 代理通过 CONNECT 建立 TLS 隧道。
 
 ### 生活看板远端发送消息
 
-`1.5.0+` 支持在 Life Dashboard 的工作区详情中选择会话并发送消息。消息不会直接暴露 DSH HTTP 接口：管理员提交的内容先进入远端短时队列，再由本地 DSH 下一次已签名快照请求领取，并通过 DSH 官方 `agent.followup()` 作为下一轮用户消息投递。
+`1.6.0+` 支持在 Life Dashboard 的工作区详情中选择会话并发送消息。配对时勾选「允许查看会话详情」即可授权所有本机工作区；消息不会直接暴露 DSH HTTP 接口：管理员提交的内容先进入远端短时队列，再由本地 DSH 下一次已签名快照请求领取，并通过 DSH 官方 `agent.followup()` 作为下一轮用户消息投递。
 
 - 仅已通过 Authentik 管理员授权的用户可提交消息；
-- 仅本机 `authorizedWorkspaces` 明确授权的工作区和当前快照中存在的会话可接收；
+- 仅在配对时明确授权详情的工作区和当前快照中存在的会话可接收；
 - 消息最多 8,000 个字符，在远端最多保留 120 秒；
 - 本机用 UUID 防重复投递，并在下一次快照中回执删除远端命令；
 - 当前目标会话必须正在 DSH 中运行；未运行时命令不会执行并会在超时后自动丢弃；
