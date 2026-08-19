@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-1.6.0-2ea043)](./package.json)
+[![Version](https://img.shields.io/badge/version-1.6.1-2ea043)](./package.json)
 [![Release](https://img.shields.io/github/v/release/Guyao146/dsh-activity-tracker?display_name=tag)](https://github.com/Guyao146/dsh-activity-tracker/releases/latest)
 [![Package and Release](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml/badge.svg)](https://github.com/Guyao146/dsh-activity-tracker/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](./LICENSE)
@@ -119,7 +119,7 @@ Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/release
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 cd dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.1.tgz"
 ```
 
 Windows PowerShell：
@@ -128,14 +128,14 @@ Windows PowerShell：
 git clone https://github.com/Guyao146/dsh-activity-tracker.git
 Set-Location dsh-activity-tracker
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.1.tgz"
 ```
 
 如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
 
 ```bash
 npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.0.tgz"
+dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.1.tgz"
 ```
 
 安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。

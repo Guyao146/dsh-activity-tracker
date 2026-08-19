@@ -1,6 +1,6 @@
 {
   "name": "dsh-activity-tracker",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "DSH 活动统计：彩色时间线看什么时候在干活/改代码，每日 token 消耗按项目/日期/小时查看。",
   "private": true,
   "type": "module",
