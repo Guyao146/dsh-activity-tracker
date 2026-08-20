@@ -1,7 +1,7 @@
 # 📊 dsh-activity-tracker
 
+[![樱落生态成员](https://raw.githubusercontent.com/Guyao146/Sakura-EcoSystem-wiki/main/assets/ConnectEcoSystem.svg)](https://mcylyr.cn)
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-4c7dff)](https://github.com/deepseek-ai/deepseek-harness)
-![樱落生态成员](https://raw.githubusercontent.com/Guyao146/Sakura-EcoSystem-wiki/main/assets/ConnectEcoSystem.svg)
 [![Version](https://img.shields.io/badge/version-1.6.2-2ea043)](./package.json)
 [![License: LGPL-v2.0](https://img.shields.io/badge/license-LGPL--2.0-blue)](./LICENSE)
 
