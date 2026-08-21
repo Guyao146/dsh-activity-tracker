@@ -11,7 +11,7 @@
 ## 樱落生态Wiki
 该项目已编写Wiki，了解插件更多细节 https://wiki.mcylyr.cn
 
-## ✨ 功能特性
+## 功能特性
 
 - **统计概览**：展示输入 Token、输出 Token、缓存读取 Token、活动事件数和会话数。
 - **活跃热力图**：以 GitHub Contributions 风格展示近 26 周的活动强度。
@@ -40,12 +40,12 @@
 - **生活看板双向会话**：可选将授权工作区的会话快照通过 HMAC 签名 HTTPS 推送到生活看板；管理员可向当前运行中的 DSH 会话发送后续消息。
 - **六位码一键配对**：在生活看板生成一次性验证码后，直接在 DSH「活动统计 → 总设置」完成连接，无需手动创建或编辑 JSON 配置文件。
 
-## 🖥️ 面板内容
+## 面板内容
 
 预览：
 <img width="1234" height="1269" alt="image" src="https://github.com/user-attachments/assets/46a91d7d-53e8-42bc-93c3-a3896e3701a0" />
 
-## 📋 环境要求
+## 环境要求
 
 - 已安装并能够正常运行的 DSH Web 环境。
 - DSH 能够加载本地插件和 Web 客户端扩展。
@@ -64,7 +64,7 @@ C:\Users\<用户名>\.dsh\sessions
 %DSH_HOME%\sessions
 ```
 
-## 📦 安装
+## 安装
 
 Web版本 DSH
 ```bash
@@ -80,7 +80,7 @@ dsh plugin --profile web add dsh-activity-tracker@latest
 
 > `cordis.patch.yml` 会由 DSH 的插件安装流程读取，并自动添加 `activity-tracker` 插件配置。
 
-## 🚀 使用方法
+## 使用方法
 
 1. 启动或重启 DSH Web。
 2. 在 DSH 左侧栏找到 **活动统计**。
@@ -89,7 +89,7 @@ dsh plugin --profile web add dsh-activity-tracker@latest
 5. 点击热力图日期或每日汇总表中的日期，查看当天的小时分布和事件时间线。
 6. 新会话产生数据后，点击右上角的 **刷新** 重新扫描。
 
-## ⚠️ 已知限制
+## 已知限制
 
 - 仅统计当前 DSH 数据目录中仍然存在的会话文件。
 - 首次扫描大量历史会话时可能需要一定时间。
