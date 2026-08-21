@@ -79,67 +79,17 @@ C:\Users\<用户名>\.dsh\sessions
 
 ## 📦 安装
 
-### 方式一：安装 GitHub Release 最新版本（推荐）
-
-1. 从 [Releases](https://github.com/Guyao146/dsh-activity-tracker/releases/latest) 下载 `dsh-activity-tracker.tgz`。
-2. 使用本地文件安装插件：
-
+Web版本 DSH
 ```bash
-dsh plugin --profile web add "file:<安装包路径>/dsh-activity-tracker.tgz"
+dsh plugin --profile web add dsh-activity-tracker@latest
 ```
 
-Windows 示例：
-
-```powershell
-dsh plugin --profile web add "file:C:\Downloads\dsh-activity-tracker.tgz"
-```
-
-### 方式二：从 GitHub 项目拉取并安装
-
-如果只想直接下载发布包并安装，可以使用一行命令：
-
+Desktop版本 DSH
 ```bash
-curl -fL https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz -o dsh-activity-tracker.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker.tgz"
+dsh plugin --profile web add dsh-activity-tracker@latest
 ```
 
-也可以使用 `wget` 下载 `main` 分支中的安装包：
-
-```bash
-wget -O dsh-activity-tracker.tgz https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz && dsh plugin --profile web add "file:./dsh-activity-tracker.tgz"
-```
-
-Windows PowerShell：
-
-```powershell
-Invoke-WebRequest -Uri "https://github.com/Guyao146/dsh-activity-tracker/releases/latest/download/dsh-activity-tracker.tgz" -OutFile "dsh-activity-tracker.tgz"; if ($?) { dsh plugin --profile web add "file:./dsh-activity-tracker.tgz" }
-```
-
-适合希望直接使用 GitHub 最新源码和安装包的场景：
-
-```bash
-git clone https://github.com/Guyao146/dsh-activity-tracker.git
-cd dsh-activity-tracker
-npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.2.tgz"
-```
-
-Windows PowerShell：
-
-```powershell
-git clone https://github.com/Guyao146/dsh-activity-tracker.git
-Set-Location dsh-activity-tracker
-npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.2.tgz"
-```
-
-如果项目中没有现成的 `.tgz`，或你希望使用最新源码重新打包：
-
-```bash
-npm pack
-dsh plugin --profile web add "file:./dsh-activity-tracker-1.6.2.tgz"
-```
-
-安装后请**重启 DSH Web**。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
+安装后请**重启 DSH **。页面加载完成后，“新会话”按钮下方会出现 **📊 活动统计** 入口。
 
 > `cordis.patch.yml` 会由 DSH 的插件安装流程读取，并自动添加 `activity-tracker` 插件配置。
 
